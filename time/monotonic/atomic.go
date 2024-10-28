@@ -5,7 +5,7 @@ package monotonic
 import (
 	"sync/atomic"
 
-	"memar/protocol"
+	error_p "memar/error/protocol"
 	"memar/time/duration"
 	time_p "memar/time/protocol"
 )
@@ -28,19 +28,20 @@ func (a *Atomic) Add(d duration.NanoSecond) { a.Int64.Add(int64(d)) }
 //memar:impl memar/time/protocol.Time
 func (a *Atomic) Epoch() time_p.Epoch { return &Epoch }
 func (a *Atomic) SecondElapsed() duration.Second {
-	return duration.Second(a.Load()) / duration.Second(duration.OneSecond)
+	var t = a.Load()
+	return t.SecondElapsed()
 }
 func (a *Atomic) NanoInSecondElapsed() duration.NanoInSecond {
 	var t = a.Load()
-	return duration.NanoInSecond(t % (t / Time(duration.OneSecond)))
+	return t.NanoInSecondElapsed()
 }
 
-//memar:impl memar/protocol.Stringer
-func (a *Atomic) ToString() (s string, err protocol.Error) {
+//memar:impl memar/string/protocol.Stringer
+func (a *Atomic) ToString() (s string, err error_p.Error) {
 	var t = a.Load()
 	return t.ToString()
 }
-func (a *Atomic) FromString(str string) (err protocol.Error) {
+func (a *Atomic) FromString(str string) (err error_p.Error) {
 	var t Time
 	err = t.FromString(str)
 	a.Store(t)

@@ -3,19 +3,16 @@
 package earth
 
 import (
+	"memar/math/integer"
 	"memar/time/duration"
 )
 
-type Minute int64
+type Minute integer.S64
 
 // Common durations.
 const (
+	NanoSecondInMinute duration.NanoSecond = 60 * duration.NanoSecondInSecond
 	SecondInMinute     duration.Second     = 60
-	NanoSecondInMinute duration.NanoSecond = 60 * duration.OneSecond
-
-	MinuteInHour Minute = 60
-	MinuteInDay  Minute = 24 * MinuteInHour
-	MinuteInWeek Minute = 7 * MinuteInDay
 )
 
 func (m *Minute) FromNanoSecond(d duration.NanoSecond) {

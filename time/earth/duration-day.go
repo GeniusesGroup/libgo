@@ -3,18 +3,20 @@
 package earth
 
 import (
+	"memar/math/integer"
 	"memar/time/duration"
 )
 
-// fast way: unix.Now().DayElapsed()
-type Day int64
+// Day show number of days pass from specific epoch.
+// e.g. `unix.Now().DayElapsed()` return number of days from unix epoch.
+type Day integer.S64
 
 // Common day durations
 const (
 	NanoSecondInDay duration.NanoSecond = 24 * NanoSecondInHour
 	SecondInDay     duration.Second     = 24 * SecondInHour
-
-	DayInWeek Day = 7
+	MinuteInDay     Minute              = 24 * MinuteInHour
+	HourInDay       Hour                = 24
 )
 
 func (day *Day) FromNanoSecond(d duration.NanoSecond) {

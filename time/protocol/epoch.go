@@ -3,7 +3,7 @@
 package time_p
 
 import (
-	"memar/protocol"
+	datatype_p "memar/datatype/protocol"
 	string_p "memar/string/protocol"
 )
 
@@ -11,6 +11,6 @@ import (
 // It is base on Epoch and Second terms to work anywhere (in any planet in the universe).
 // https://en.wikipedia.org/wiki/Epoch
 type Epoch interface {
-	protocol.DataType
+	datatype_p.DataType
 	string_p.Stringer_To[string_p.String]
 }

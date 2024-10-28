@@ -3,15 +3,19 @@
 package earth
 
 import (
+	"memar/math/integer"
 	"memar/time/duration"
 )
 
-type Week int64
+type Week integer.S64
 
 // Common durations.
 const (
 	NanoSecondInWeek duration.NanoSecond = 7 * NanoSecondInDay
 	SecondInWeek     duration.Second     = 7 * SecondInDay
+	MinuteInWeek     Minute              = 7 * MinuteInDay
+	HourInWeek       Hour                = 7 * HourInDay
+	DayInWeek        Day                 = 7
 )
 
 func (w *Week) FromNanoSecond(d duration.NanoSecond) {

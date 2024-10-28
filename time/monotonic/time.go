@@ -3,7 +3,7 @@
 package monotonic
 
 import (
-	"memar/protocol"
+	error_p "memar/error/protocol"
 	"memar/time/duration"
 	time_p "memar/time/protocol"
 )
@@ -15,25 +15,27 @@ func Now() Time {
 
 // A Time monotonic clock is for measuring time.
 // time-measuring operations, specifically comparisons and subtractions, use the monotonic clock.
-type Time int64
+type Time duration.NanoSecond
 
 //memar:impl memar/time/protocol.Time
 func (t *Time) Epoch() time_p.Epoch { return &Epoch }
-func (t *Time) SecondElapsed() duration.Second {
-	return duration.Second(*t) / duration.Second(duration.OneSecond)
+func (t *Time) SecondElapsed() (sec duration.Second) {
+	sec.FromNanoSecond(duration.NanoSecond(*t))
+	return
 }
-func (t *Time) NanoInSecondElapsed() duration.NanoInSecond {
-	return duration.NanoInSecond(int64(*t) % int64(t.SecondElapsed()))
+func (t *Time) NanoInSecondElapsed() (d duration.NanoInSecond) {
+	d.FromSec(duration.NanoSecond(*t))
+	return
 }
 
-//memar:impl memar/protocol.Stringer
-func (t *Time) ToString() (s string, err protocol.Error) {
+//memar:impl memar/string/protocol.Stringer
+func (t *Time) ToString() (s string, err error_p.Error) {
 	s = "TODO:::"
 	return
 }
 
-//memar:impl memar/protocol.Stringer
-func (t *Time) FromString(str string) (err protocol.Error) {
+//memar:impl memar/string/protocol.Stringer
+func (t *Time) FromString(str string) (err error_p.Error) {
 	// TODO:::
 	return
 }

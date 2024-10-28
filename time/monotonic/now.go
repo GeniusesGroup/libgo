@@ -6,9 +6,11 @@ import (
 	_ "unsafe" // for go:linkname
 )
 
+// TODO::: move assembly logic from go/src/runtime to this package to prevent use unsafe package
+// TODO::: Is duration include sleep time or without it??
+
 // now returns the current value of the runtime monotonic clock in nanoseconds.
 // It isn't not wall clock, Use in tasks like timeout, ...
-// TODO::: move assembly logic from go/src/runtime to this package to prevent use unsafe package
 //
 //go:linkname now runtime.nanotime
 func now() int64

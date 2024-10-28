@@ -3,8 +3,9 @@
 package utc
 
 import (
-	"memar/protocol"
+	error_p "memar/error/protocol"
 	"memar/time/duration"
+	"memar/time/earth"
 	time_p "memar/time/protocol"
 	"memar/time/unix"
 )
@@ -21,12 +22,12 @@ func (t *Time) Epoch() time_p.Epoch                        { return &Epoch }
 func (t *Time) SecondElapsed() duration.Second             { return t.sec }
 func (t *Time) NanoInSecondElapsed() duration.NanoInSecond { return t.nsec }
 
-//memar:impl memar/protocol.Stringer
-func (t *Time) ToString() (str string, err protocol.Error) {
+//memar:impl memar/string/protocol.Stringer
+func (t *Time) ToString() (str string, err error_p.Error) {
 	// TODO:::
 	return
 }
-func (t *Time) FromString(str string) (err protocol.Error) {
+func (t *Time) FromString(str string) (err error_p.Error) {
 	// TODO:::
 	return
 }
@@ -43,16 +44,27 @@ func (t Time) MilliElapsed() (d duration.MilliSecond) {
 	d.FromSecAndNano(t.sec, t.nsec)
 	return
 }
-func (t Time) SecElapsed() duration.Second  { return t.sec }
-func (t Time) MinuteElapsed() MinuteElapsed { return MinuteElapsed(t.sec / 60) }
-func (t Time) HourElapsed() HourElapsed     { return HourElapsed(t.sec / (60 * 60)) }
-func (t Time) DayElapsed() DayElapsed       { return DayElapsed(t.sec / (24 * 60 * 60)) }
-func (t Time) WeekElapsed() WeekElapsed     { return WeekElapsed(t.sec / (7 * 24 * 60 * 60)) }
-func (t Time) MonthElapsed() MonthElapsed   { return MonthElapsed(t.sec / (30 * 24 * 60 * 60)) }
-func (t Time) TropicalYearElapsed() TropicalYearElapsed {
-	return TropicalYearElapsed(t.sec / TropicalYear)
+func (t Time) SecElapsed() duration.Second { return t.sec }
+
+// MinuteElapsed can easily use by `utc.Now().MinuteElapsed()`
+func (t Time) MinuteElapsed() (m earth.Minute) { m.FromSecond(t.sec); return }
+
+// HourElapsed can easily use by `utc.Now().HourElapsed()`
+func (t Time) HourElapsed() (h earth.Hour) { h.FromSecond(t.sec); return }
+
+// DayElapsed can easily use by `utc.Now().DayElapsed()`
+func (t Time) DayElapsed() (d earth.Day) { d.FromSecond(t.sec); return }
+
+// WeekElapsed can easily use by `utc.Now().WeekElapsed()`
+func (t Time) WeekElapsed() (w earth.Week) { w.FromSecond(t.sec); return }
+
+// MonthElapsed can easily use by `utc.Now().MonthElapsed()`
+func (t Time) MonthElapsed() (m earth.Month) { m.FromSecond(t.sec); return }
+
+func (t Time) TropicalYearElapsed() earth.TropicalYear {
+	return earth.TropicalYear(t.sec / earth.SecondInTropicalYear)
 }
-func (t Time) CalendarYearElapsed() CalendarYearElapsed { return 0 } // TODO:::
+func (t Time) CalendarYearElapsed() earth.CalendarYear { return 0 } // TODO:::
 
 func (t Time) NanoElapsedSafe() bool {
 	// TODO:::
@@ -109,14 +121,14 @@ func (t *Time) Local() (loc Time) {
 }
 
 func (t *Time) DayHours() (hour DayHours) {
-	var secPassDay = t.sec % (24 * 60 * 60)
-	var dayHour = secPassDay / (60 * 60)
+	var secPassDay = t.sec % earth.SecondInDay
+	var dayHour = secPassDay / earth.SecondInHour
 	hour = (1 << dayHour)
 	return
 }
 func (t *Time) Weekdays() (day Weekdays) {
-	var week = t.sec % (7 * 24 * 60 * 60)
-	var weekDay = week / (24 * 60 * 60)
+	var week = t.sec % earth.SecondInWeek
+	var weekDay = week / earth.SecondInDay
 	// weekDay index from Thursday so change it to Monday as Weekdays
 	if weekDay < 4 {
 		weekDay += 3

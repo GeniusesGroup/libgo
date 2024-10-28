@@ -3,7 +3,7 @@
 package unix
 
 import (
-	"memar/protocol"
+	error_p "memar/error/protocol"
 	string_p "memar/string/protocol"
 	"memar/time/duration"
 	"memar/time/earth"
@@ -19,17 +19,17 @@ type Time struct {
 	nsec duration.NanoInSecond
 }
 
-//memar:impl memar/time/time_p.Time
+//memar:impl memar/time/protocol.Time
 func (t *Time) Epoch() time_p.Epoch                        { return &Epoch }
 func (t *Time) SecondElapsed() duration.Second             { return t.sec }
 func (t *Time) NanoInSecondElapsed() duration.NanoInSecond { return t.nsec }
 
 //memar:impl memar/string/protocol.Stringer
-func (t *Time) ToString() (str string_p.String, err protocol.Error) {
+func (t *Time) ToString() (str string_p.String, err error_p.Error) {
 	// TODO:::
 	return
 }
-func (t *Time) FromString(str string_p.String) (err protocol.Error) {
+func (t *Time) FromString(str string_p.String) (err error_p.Error) {
 	// TODO:::
 	return
 }
@@ -55,8 +55,9 @@ func (t *Time) Add(d duration.NanoSecond) {
 	t.nsec += nsec
 }
 func (t Time) Since(baseTime Time) (d duration.NanoSecond) {
-	d = duration.NanoSecond(baseTime.sec-t.sec) * duration.OneSecond
-	d += duration.NanoSecond(baseTime.nsec - t.nsec)
+	var secPass = baseTime.sec - t.sec
+	var nsecPass = duration.NanoSecond(baseTime.nsec - t.nsec)
+	d = secPass.ToNanoSecond() + nsecPass
 	return
 }
 func (t Time) SinceNow() (d duration.NanoSecond) { return t.Since(Now()) }
@@ -96,10 +97,10 @@ func (t Time) ElapsedByNanoSecond(d duration.NanoSecond) (period int64) {
 	if sec > 0 {
 		period = int64(t.sec / sec)
 		if nsec > 0 {
-			period += (int64(t.nsec/nsec) / int64(duration.OneSecond))
+			period += (int64(t.nsec/nsec) / int64(duration.NanoSecondInSecond))
 		}
 	} else {
-		period = int64(duration.NanoSecond(t.sec)*duration.OneSecond) / int64(nsec)
+		period = int64(duration.NanoSecond(t.sec)*duration.NanoSecondInSecond) / int64(nsec)
 		period += int64(t.nsec / nsec)
 	}
 	return

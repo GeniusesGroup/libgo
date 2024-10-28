@@ -2,11 +2,16 @@
 
 package duration
 
+import (
+	error_p "memar/error/protocol"
+	"memar/math/integer"
+)
+
 // TODO::: Need to check overflow??
 
 // A NanoSecond duration represents the elapsed time between two instants as an int64 nanosecond count.
 // The representation limits the largest representable duration to approximately 290 earth years.
-type NanoSecond int64
+type NanoSecond integer.S64
 
 // Common durations.
 const (
@@ -28,3 +33,16 @@ func (d NanoSecond) ToSecAndNano() (sec Second, nsec NanoInSecond) {
 func (d *NanoSecond) FromSecAndNano(sec Second, nsec NanoInSecond) {
 	*d = sec.ToNanoSecond() + NanoSecond(nsec)
 }
+
+//memar:impl memar/string/protocol.Stringer
+func (d *NanoSecond) ToString() (str string, err error_p.Error) {
+	// Go doesn't support to access derived type methods, So we MUST hack it this way!
+	// var s64 = integer.S64(*d)
+	// return s64.ToString()
+	return (*integer.S64)(d).ToString()
+}
+
+// func (d *NanoSecond) FromString(str string) (err error_p.Error) {
+// 	strconv.ParseInt(str, 10, s.bitSize())
+// 	return
+// }

@@ -43,7 +43,7 @@ func TestTime_ElapsedByDuration(t *testing.T) {
 			args: args{
 				d: 10,
 			},
-			wantPeriod: 1 * int64(duration.OneSecond) / 10,
+			wantPeriod: 1 * int64(duration.NanoSecondInSecond) / 10,
 		},
 		{
 			name: "test2",
@@ -54,7 +54,7 @@ func TestTime_ElapsedByDuration(t *testing.T) {
 			args: args{
 				d: 10,
 			},
-			wantPeriod: (1*int64(duration.OneSecond) + 100) / 10,
+			wantPeriod: (1*int64(duration.NanoSecondInSecond) + 100) / 10,
 		},
 		{
 			name: "test3",
@@ -63,15 +63,15 @@ func TestTime_ElapsedByDuration(t *testing.T) {
 				nsec: 100,
 			},
 			args: args{
-				d: (1 * duration.OneSecond) + 10,
+				d: (1 * duration.NanoSecondInSecond) + 10,
 			},
 			wantPeriod: 10,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotPeriod := tt.tr.ElapsedByDuration(tt.args.d); gotPeriod != tt.wantPeriod {
-				t.Errorf("Time.ElapsedByDuration() = %v, want %v", gotPeriod, tt.wantPeriod)
+			if gotPeriod := tt.tr.ElapsedByNanoSecond(tt.args.d); gotPeriod != tt.wantPeriod {
+				t.Errorf("Time.ElapsedByNanoSecond() = %v, want %v", gotPeriod, tt.wantPeriod)
 			}
 		})
 	}

@@ -2,10 +2,6 @@
 
 package utc
 
-import (
-	"memar/protocol"
-)
-
 // A Weekdays specifies a day of the week.
 // can use by multiple state e.g. Weekdays_Saturday|Weekdays_Monday
 type Weekdays uint8
@@ -28,41 +24,6 @@ func (w Weekdays) Check(day Weekdays) (exist bool) { return day&w != 0 }
 
 // Check given day exist in desire Weekdays!
 func (wd Weekdays) String() (day string) {
-	switch protocol.AppLanguage {
-	case protocol.LanguageEnglish:
-		switch wd {
-		case Weekdays_Monday:
-			return "Monday"
-		case Weekdays_Tuesday:
-			return "Tuesday"
-		case Weekdays_Wednesday:
-			return "Wednesday"
-		case Weekdays_Thursday:
-			return "Thursday"
-		case Weekdays_Friday:
-			return "Friday"
-		case Weekdays_Saturday:
-			return "Saturday"
-		case Weekdays_Sunday:
-			return "Sunday"
-		}
-	case protocol.LanguagePersian:
-		switch wd {
-		case Weekdays_Monday:
-			return "دوشنبه"
-		case Weekdays_Tuesday:
-			return "سه شنبه"
-		case Weekdays_Wednesday:
-			return "چهارشنبه"
-		case Weekdays_Thursday:
-			return "پنچ شنبه"
-		case Weekdays_Friday:
-			return "جمعه"
-		case Weekdays_Saturday:
-			return "شنبه"
-		case Weekdays_Sunday:
-			return "یکشنبه"
-		}
-	}
+	// TODO::: log.Fatal() or what??
 	return
 }

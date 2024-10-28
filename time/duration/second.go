@@ -2,9 +2,14 @@
 
 package duration
 
+import (
+	error_p "memar/error/protocol"
+	"memar/math/integer"
+)
+
 // A Second duration represents the elapsed time between two instants as an int64 second count.
 // https://en.wikipedia.org/wiki/Second
-type Second int64
+type Second integer.S64
 
 // Common durations.
 const (
@@ -26,4 +31,12 @@ func (d *Second) ToNanoSecond() (nsec NanoSecond) {
 func (d *Second) FromNanoSecond(nsec NanoSecond) {
 	*d = Second(nsec / NanoSecondInSecond)
 	// TODO::: return overflow nanosecond??
+}
+
+//memar:impl memar/string/protocol.Stringer
+func (d *Second) ToString() (str string, err error_p.Error) {
+	// Go doesn't support to access derived type methods, So we MUST hack it this way!
+	// var s64 = integer.S64(*d)
+	// return s64.ToString()
+	return (*integer.S64)(d).ToString()
 }
