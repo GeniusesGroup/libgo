@@ -1,6 +1,6 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package storage_p
+package block_p
 
 import (
 	adt_p "memar/adt/protocol"
@@ -8,9 +8,9 @@ import (
 	error_p "memar/error/protocol"
 )
 
-// BlockVolatile or StorageMemory is the interface that show how an app access to volatile storage devices.
+// Volatile or StorageMemory is the interface that show how an app access to volatile storage devices.
 // Usually dev must not use this interface due to it can damage any data written by objects, files, records, k/v interfaces
-type BlockVolatile interface {
+type Volatile interface {
 	// return volume capacity
 	adt_p.Capacity
 
@@ -29,10 +29,10 @@ type BlockVolatile interface {
 	Move(desOffset, srcOffset adt_p.ElementIndex, limit adt_p.NumberOfElement) (err error_p.Error)
 }
 
-// Block is the interface that show how an app access to storage devices.
+// NonVolatile is the interface that show how an app access to storage devices.
 // Usually dev must not use this interface due to it can damage any data written by objects, files, records or k/v interfaces
-type Block interface {
-	BlockVolatile
+type NonVolatile interface {
+	Volatile
 
 	// Flush force the storage device to write any changes to data (store in cache) before call Flush.
 	Flush() (err error_p.Error)

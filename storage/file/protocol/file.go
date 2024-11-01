@@ -1,6 +1,6 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package storage_p
+package file_p
 
 import (
 	adt_p "memar/adt/protocol"
