@@ -7,17 +7,21 @@ import (
 	"strconv"
 	"strings"
 
+	codec_p "memar/codec/protocol"
+	"memar/compress"
 	cts "memar/compress-types"
+	compress_p "memar/compress/protocol"
+	error_p "memar/error/protocol"
 	"memar/minify"
-	"memar/protocol"
+	file_p "memar/storage/file/protocol"
 )
 
-func FindByRelativeFrom(file protocol.File, relativePath string) (desireFile protocol.File) {
+func FindByRelativeFrom(file file_p.File, relativePath string) (desireFile file_p.File) {
 	var locPart = strings.Split(relativePath, "/")
 	if len(locPart) < 2 {
 		return
 	}
-	var desireDir = file.ParentDirectory()
+	var desireDir = file.Metadata().ParentDirectory()
 	for i := 0; i < len(locPart)-1; i++ { // -1 due have file name at end of locPart
 		switch locPart[i] {
 		case ".":
@@ -38,9 +42,9 @@ func FindByRelativeFrom(file protocol.File, relativePath string) (desireFile pro
 	return
 }
 
-func AddHashToFileName(file protocol.File) {
-	var nameWithoutExtension = file.Metadata().URI().NameWithoutExtension()
-	var fileExt = file.Metadata().URI().Extension()
+func AddHashToFileName(file file_p.File) {
+	var nameWithoutExtension = file.Metadata().FileNameWithoutExtension()
+	var fileExt = file.Metadata().FileExtension()
 
 	// Just want to differ two same file, So crc32 is more enough!
 	// var md5Hasher = md5.New()
@@ -54,34 +58,34 @@ func AddHashToFileName(file protocol.File) {
 }
 
 // Minify replace file data with minify of them if possible.
-func Minify(file protocol.File) (err protocol.Error) {
+func Minify(file file_p.File) (err error_p.Error) {
 	err = minify.Minify(file.Data())
 	return
 }
 
 // Compress creates new files in the directory with desire compress algorithm
-func Compress(file protocol.File, contentEncodings []string, options protocol.CompressOptions) (err protocol.Error) {
+func Compress(file file_p.File, contentEncodings []string, options compress.Options) (err error_p.Error) {
 	// Check file type and compress just if it worth.
-	var fe = file.Metadata().URI().Extension()
+	var fe = file.Metadata().FileExtension()
 	switch fe {
 	case "png", "jpg", "gif", "jpeg", "mkv", "avi", "mp3", "mp4":
 		return
 	}
 
 	var parentDir = file.ParentDirectory()
-	var ct protocol.CompressType
+	var ct compress_p.CompressType
 	for _, ce := range contentEncodings {
 		ct, err = cts.GetByContentEncoding(ce)
 		if err != nil {
 			continue
 		}
-		var compressor protocol.Codec
+		var compressor codec_p.Codec
 		compressor, err = ct.Compress(file.Data(), options)
 		if err != nil {
 			return
 		}
-		var compressedFileName = file.Metadata().URI().Name() + "." + ct.FileExtension()
-		var compressedFile protocol.File
+		var compressedFileName = file.Metadata().FileName() + "." + ct.FileExtension()
+		var compressedFile file_p.File
 		compressedFile, err = parentDir.File(compressedFileName)
 		if err != nil {
 			return
@@ -99,7 +103,7 @@ type ReplaceReq struct {
 }
 
 // Replace replace given data in the file
-func ReplaceLocation(file protocol.File, data []ReplaceReq) (err protocol.Error) {
+func ReplaceLocation(file file_p.File, data []ReplaceReq) (err error_p.Error) {
 	var fileData []byte
 	fileData, err = file.Data().Marshal()
 	if err != nil {
