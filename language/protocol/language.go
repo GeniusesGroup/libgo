@@ -2,7 +2,7 @@
 
 package lang_p
 
-type Language interface {
+type Field_LanguageID interface {
 	LanguageID() LanguageID
 }
 

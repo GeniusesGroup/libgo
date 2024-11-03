@@ -3,7 +3,7 @@
 package hash_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
 	buffer_p "memar/buffer/protocol"
 	object_p "memar/computer/language/object/protocol"
 	error_p "memar/error/protocol"
@@ -32,13 +32,13 @@ type Hash interface {
 	Sum() []byte
 
 	// HashLength returns the number of bytes Sum will return.
-	HashLength() adt_p.NumberOfElement
+	HashLength() container_p.NumberOfElement
 
 	// BlockLength returns the hash's underlying block size.
 	// The Write method must be able to accept any amount
 	// of data, but it may operate more efficiently if all writes
 	// are a multiple of the block size.
-	BlockLength() adt_p.NumberOfElement
+	BlockLength() container_p.NumberOfElement
 }
 
 // Hash16 is the common interface implemented by all 16-bit hash functions.

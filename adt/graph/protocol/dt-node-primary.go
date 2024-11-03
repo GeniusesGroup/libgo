@@ -1,6 +1,7 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package string_p
+package graph_p
 
-// Character is base of any character encoding
-type Character any
+type Field_PrimaryNode[ID any] interface {
+	PrimaryNode() ID
+}

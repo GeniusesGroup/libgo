@@ -9,6 +9,9 @@ import (
 )
 
 // Error is base behaviors that any Error capsule must implement.
+// Error MUST NOT mix with `Log Event`.
+// Error has static data for any client, to tell about system fault situation when processing client request.
+// Log event carry on static and dynamic data for developers, to indicate system fault situation, and help them troubleshoot potential bugs.
 //
 // Other suggestions:
 // - opaque error model: https://dave.cheney.net/paste/gocon-spring-2016.pdf
@@ -20,6 +23,7 @@ type Error interface {
 
 	// Can't un-comment below due to Golang import cycle problem, So add it manually.
 	// primitive_p.Equivalence[Error]
+	// TODO::: Equal() or Equals() or Equivalence()
 	Equal(with Error) bool
 
 	// ADT

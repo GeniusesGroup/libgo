@@ -1,6 +1,6 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package adt_p
+package container_p
 
 import (
 	error_p "memar/error/protocol"

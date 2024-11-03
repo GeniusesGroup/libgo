@@ -7,5 +7,6 @@ type Field_ID interface {
 }
 
 // ID use as a way to distinguish data-types as domains.
-// It MUST fill by first 64bit of Hash of MediaType()
+// It MUST fill by any UUID mechanism that guaranty it will be globally unique.
+// Suggest use first 64bit of Hash of MediaType()
 type ID uint64

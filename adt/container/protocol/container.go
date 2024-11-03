@@ -1,15 +1,19 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package adt_p
+package container_p
+
+import (
+	adt_p "memar/adt/protocol"
+)
 
 // Container is a data structure whose instances are collections of other objects.
 // In other words, they store objects in an organized way that follows specific access rules.
 // https://en.wikipedia.org/wiki/Container_(abstract_data_type)
 // https://en.wikipedia.org/wiki/Collection_(abstract_data_type)
 type Container[ELEMENT Element] interface {
-	ADT
+	adt_p.ADT
 
-	Container_Accessor[ELEMENT]
+	Accessor[ELEMENT]
 
 	Clear
 	Reversed
@@ -22,10 +26,10 @@ type Container[ELEMENT Element] interface {
 	// ExpectedLength
 }
 
-// Container_Accessor is the interface that wraps the Accessor methods.
+// Accessor is the interface that wraps the Accessor methods.
 //
 // Implementations must not retain p after `Buffer.Reinit` or `Buffer.Deinit` called.
-type Container_Accessor[ELEMENT Element] interface {
+type Accessor[ELEMENT Element] interface {
 	GetElement[ELEMENT]
 	SetElements[ELEMENT]
 

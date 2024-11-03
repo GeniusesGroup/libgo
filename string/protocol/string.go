@@ -3,7 +3,8 @@
 package string_p
 
 import (
-	adt_p "memar/adt/protocol"
+	array_p "memar/adt/array/protocol"
+	container_p "memar/adt/container/protocol"
 	primitive_p "memar/computer/language/primitive/protocol"
 	error_p "memar/error/protocol"
 )
@@ -18,14 +19,15 @@ import (
 type String interface {
 	CharacterEncoding() CharacterEncoding
 
-	adt_p.Array_Dynamic[Character]
+	array_p.Dynamic[Character]
 
-	adt_p.Compare[String]
-	adt_p.Concat[String]
+	container_p.Compare[String]
+	container_p.Concat[String]
 	// Join[String]
-	adt_p.Split_Element[String, Character]
-	adt_p.Split_Offset[String, Character]
+	container_p.Split_Element[String, Character]
+	container_p.Split_Offset[String, Character]
 
+	primitive_p.Equivalence[String]
 	// If source is a `Split` result, no copy action need and just increase buffer write index.
 	primitive_p.Clone[String]
 	primitive_p.Copy[String]

@@ -3,8 +3,8 @@
 package crypto_p
 
 import (
+	datatype_p "memar/datatype/protocol"
 	uuid_p "memar/identifier/protocol"
-	"memar/protocol"
 	string_p "memar/string/protocol"
 )
 
@@ -12,7 +12,7 @@ import (
 type CipherSuite interface {
 	CipherSuite() string_p.String // e.g. TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 
-	protocol.DataType
+	datatype_p.DataType
 }
 
 type CipherSuite_Parsed[STR string_p.String] interface {

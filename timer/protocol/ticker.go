@@ -11,7 +11,7 @@ import (
 // Implement object of Timer can also be a ticker,
 // just Start() method of timer is same as Tick(d, 0).
 // Reset() just change the interval not first tick duration.
-type Ticker /*[DUR time_p.Duration]*/ interface {
+type Ticker /*[DUR duration_p.Duration]*/ interface {
 	// Tick will add timer to default timing mechanism like TimingHeap, TimingWheel, ...
 	Tick(first, interval duration.NanoSecond) (err error_p.Error)
 }

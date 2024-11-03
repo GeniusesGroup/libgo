@@ -9,7 +9,7 @@ type Field_LifeCycle interface {
 type LifeCycle uint8
 
 // Software Status
-// https://en.wikipedia.org/wiki/LifeCycle_release_life_cycle
+// https://en.wikipedia.org/wiki/Software_release_life_cycle
 const (
 	LifeCycle_Unset LifeCycle = iota
 

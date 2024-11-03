@@ -3,8 +3,8 @@
 package gui_p
 
 import (
+	mediatype_p "memar/mediatype/protocol"
 	picture_p "memar/picture/protocol"
-	"memar/protocol"
 )
 
 type Pages interface {
@@ -15,17 +15,7 @@ type Pages interface {
 
 // Page indicate what is a GUI page.
 type Page interface {
-	// "all", "noindex", "nofollow", "none", "noarchive", "nosnippet", "notranslate", "noimageindex", "unavailable_after: [RFC-850 date/time]"
-	Robots() string
-	Icon() picture_p.Image
-	Info() Information // It is locale info
-	// think about a page that show a user medical records, doctor need to know user birthday, so /user page must ready to reach by doctor
-	// or doctor need to know other doctors visits to know any advice from them for this user.
-	RelatedPages() []Page
-
-	Path() string // To route page by path of HTTP-URI
-	// /product?id=1&title=book
-	AcceptedCondition(key string) (defaultValue any) // HTTP-URI queries
+	Page_Manifest
 
 	ActiveState() PageState
 	ActiveStates() []PageState
@@ -42,8 +32,22 @@ type Page interface {
 	// som() SOM
 	// it is raw version of the page templates DOM e.g. products-template-card.html
 	// template(name string) DOM
+}
 
-	protocol.MediaType
+type Page_Manifest interface {
+	// "all", "noindex", "nofollow", "none", "noarchive", "nosnippet", "notranslate", "noimageindex", "unavailable_after: [RFC-850 date/time]"
+	Robots() string
+	Icon() picture_p.Image
+	Info() Information // It is locale info
+	// think about a page that show a user medical records, doctor need to know user birthday, so /user page must ready to reach by doctor
+	// or doctor need to know other doctors visits to know any advice from them for this user.
+	RelatedPages() []Page
+
+	Path() string // To route page by path of HTTP-URI
+	// /product?id=1&title=book
+	AcceptedCondition(key string) (defaultValue any) // HTTP-URI queries
+
+	mediatype_p.MediaType
 }
 
 type Page_DefaultConditions interface {

@@ -3,12 +3,12 @@
 package stack_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
 )
 
 // Stack is stack data structure.
 // https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
-type Stack[ELEMENT adt_p.Element] interface {
-	adt_p.Push[ELEMENT]
-	adt_p.Pop[ELEMENT]
+type Stack[ELEMENT container_p.Element] interface {
+	container_p.Push[ELEMENT]
+	container_p.Pop[ELEMENT]
 }

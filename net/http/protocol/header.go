@@ -18,4 +18,4 @@ type Header[STR string_p.String] interface {
 
 // some header fields such as "Set-Cookie", "WWW-Authenticate", "Proxy-Authenticate" break multiple values
 // separate by comma and use multi line same key! implementations MUST provide iteration mechanism over all header fields.
-// type Header_Iteration[STR String] adt_p.Iteration_KV[STR, STR]
+// type Header_Iteration[STR String] array_p.Iteration_KV[STR, STR]

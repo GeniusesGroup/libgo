@@ -3,7 +3,8 @@
 package list_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
+	error_p "memar/error/protocol"
 )
 
 // list or sequence is an abstract data type that represents a finite number of ordered values,
@@ -15,19 +16,19 @@ import (
 // https://en.wikipedia.org/wiki/List_(abstract_data_type)
 // Other Languages:
 // - https://docs.python.org/3/tutorial/datastructures.html
-type List[ELEMENT adt_p.Element] interface {
+type List[ELEMENT container_p.Element] interface {
 	Head[ELEMENT]
 	Tail[ELEMENT]
 
-	adt_p.Container[ELEMENT]
+	container_p.Container[ELEMENT]
 }
 
-type Head[ELEMENT adt_p.Element] interface {
+type Head[ELEMENT container_p.Element] interface {
 	// Head will return first element of the container.
 	Head() (el ELEMENT, err error_p.Error)
 }
 
-type Tail[ELEMENT adt_p.Element] interface {
+type Tail[ELEMENT container_p.Element] interface {
 	// Tail will return last element of the container.
 	// an operation for referring to the list consisting of all the components of a list except for its first (this is called the "tail" of the list.)
 	Tail() (el ELEMENT, err error_p.Error)

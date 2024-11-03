@@ -7,7 +7,7 @@ import (
 	datatype_p "memar/datatype/protocol"
 	error_p "memar/error/protocol"
 	mediatype_p "memar/mediatype/protocol"
-	storage_p "memar/storage/protocol"
+	file_p "memar/storage/file/protocol"
 )
 
 // CompressType is standard shape of any compress coding type
@@ -18,7 +18,7 @@ type CompressType[BUF buffer_p.Buffer, OPTs any] interface {
 	ContentEncoding
 	datatype_p.DataType
 	mediatype_p.MediaType
-	storage_p.FileExtension
+	file_p.FileExtension
 }
 
 // ContentEncoding is standard shape of http compress coding type string

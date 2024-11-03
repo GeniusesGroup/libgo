@@ -3,9 +3,10 @@
 package buffer_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
 	object_p "memar/computer/language/object/protocol"
 	primitive_p "memar/computer/language/primitive/protocol"
+	datatype_p "memar/datatype/protocol"
 )
 
 // In computer science, a data buffer (or just buffer) is a region of a memory used to store data temporarily
@@ -13,7 +14,7 @@ import (
 //
 // https://en.wikipedia.org/wiki/Data_buffer
 type Buffer interface {
-	BufferType() Type
+	datatype_p.Field_ID
 
 	object_p.LifeCycle
 	// Init(opt BufferOptions)
@@ -21,14 +22,14 @@ type Buffer interface {
 	Buffer_Index
 	Buffer_Sizer
 
-	adt_p.Container[byte]
+	container_p.Container[byte]
 
-	adt_p.Compare[Buffer]
-	adt_p.Concat[Buffer]
-	adt_p.Replace_Elements[Buffer]
+	container_p.Compare[Buffer]
+	container_p.Concat[Buffer]
+	container_p.Replace_Elements[Buffer]
 
-	adt_p.Split_Element[Buffer, byte]
-	adt_p.Split_Offset[Buffer, byte]
+	container_p.Split_Element[Buffer, byte]
+	container_p.Split_Offset[Buffer, byte]
 
 	// If source is a `Split` result, no copy action need and just increase buffer write index.
 	primitive_p.Clone[Buffer]
@@ -55,14 +56,14 @@ type Buffer interface {
 // In this respect ReadAt is different from Read.
 
 type Buffer_Index interface {
-	ReadIndex() adt_p.ElementIndex
-	WriteIndex() adt_p.ElementIndex
+	ReadIndex() container_p.ElementIndex
+	WriteIndex() container_p.ElementIndex
 
-	SetReadIndex(di adt_p.ElementIndex)
-	SetWriteIndex(di adt_p.ElementIndex)
+	SetReadIndex(di container_p.ElementIndex)
+	SetWriteIndex(di container_p.ElementIndex)
 }
 
 type Buffer_Sizer interface {
 	// UnreadLength returns how many bytes are not read(ReadIndex to WriteIndex) in the buffer.
-	UnreadLength() adt_p.NumberOfElement
+	UnreadLength() container_p.NumberOfElement
 }

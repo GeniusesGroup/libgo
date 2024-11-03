@@ -3,6 +3,8 @@
 package ht_p
 
 import (
+	array_p "memar/adt/array/protocol"
+	container_p "memar/adt/container/protocol"
 	adt_p "memar/adt/protocol"
 	primitive_p "memar/computer/language/primitive/protocol"
 	hash_p "memar/crypto/hash/protocol"
@@ -20,10 +22,11 @@ type HashTable[K Key[K], V Value] interface {
 
 	Clear() (err error_p.Error)
 	Copy() (new HashTable[K, V], err error_p.Error)
-	Iterate(adt_p.Iterate_KV[K, V]) (err error_p.Error)
+	Iterate(array_p.Iterate_KV[K, V]) (err error_p.Error)
 
-	adt_p.Capacity
-	adt_p.OccupiedLength
+	adt_p.ADT
+	container_p.Capacity
+	container_p.OccupiedLength
 }
 
 type AtomicAccessor[K Key[any], V Value] interface {

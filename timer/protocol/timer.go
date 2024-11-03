@@ -13,7 +13,7 @@ import (
 // many other type than async timer can be implemented by libraries,
 // like channel-based sync one that provide e.g. Signal() <-chan struct{}
 // client use Signal() to block until timeout occur.
-type Timer[ /*DUR time_p.Duration,*/ TIME time_p.Time, ST TimerStatus] interface {
+type Timer[ /*DUR duration_p.Duration,*/ TIME time_p.Time, ST TimerStatus] interface {
 	// Init initialize the Timer with given callback function.
 	// - **NOTE**: each time calling callback() in the timer goroutine, so callback must be
 	// a well-behaved function and not block. If callback need blocking operation it must do its logic in new thread(goroutine).

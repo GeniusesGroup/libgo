@@ -3,7 +3,7 @@
 package codec_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
 	buffer_p "memar/buffer/protocol"
 	datatype_p "memar/datatype/protocol"
 	error_p "memar/error/protocol"
@@ -36,27 +36,9 @@ type Encoder /*[BUF Buffer]*/ interface {
 	CodecLength
 }
 
-// In computer science, marshalling or marshaling (US spelling) is the process of
-// transforming the memory representation of an object into a data format suitable for storage or transmission.
-// https://en.wikipedia.org/wiki/Marshalling_(computer_science)
-
-// Unmarshaler is the interface that wraps the Unmarshal method.
-type Unmarshaler interface {
-	// Unmarshal reads and decode data from given slice until end of needed data or occur error.
-	Unmarshal(source []byte) (n adt_p.NumberOfElement, err error_p.Error)
-}
-
-// Marshaler is the interface that wraps the Marshal & CodecLength methods.
-type Marshaler interface {
-	// Marshal write serialized(encoded) data to given slice from len to max cap and save marshal state for future call.
-	Marshal(destination []byte) (n adt_p.NumberOfElement, err error_p.Error)
-
-	CodecLength
-}
-
 type CodecLength interface {
 	// SerializationLength return value ln, that is the max number of bytes that will written as encode data by Encode()||Marshal()
 	// 0 means no data and -1 means can't tell until full write.
 	// Due to prevent performance penalty, Implementors can return max number instead of actual number of length.
-	SerializationLength() (ln adt_p.NumberOfElement)
+	SerializationLength() (ln container_p.NumberOfElement)
 }

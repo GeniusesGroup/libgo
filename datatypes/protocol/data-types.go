@@ -9,5 +9,5 @@ import (
 
 type DataTypes interface {
 	Register(dt datatype_p.DataType) (err error_p.Error)
-	GetByID(id datatype_p.DataTypeID) (dt datatype_p.DataType, err error_p.Error)
+	GetByID(id datatype_p.ID) (dt datatype_p.DataType, err error_p.Error)
 }
