@@ -1,6 +1,6 @@
-/* For license and copyright information please see LEGAL file in repository */
+/* For license and copyright information please see the LEGAL file in the code repository */
 
-package lang
+package harf
 
 // Compress use to compress a string array!
 func Compress(s []byte) ([]byte, error) { return nil, nil }
@@ -9,11 +9,11 @@ func Compress(s []byte) ([]byte, error) { return nil, nil }
 func UnCompress(s []byte) ([]byte, error) { return nil, nil }
 
 // Validate use to validate a string array for any error!
-// We don't offer any fix proccess! Any suggestion can have security concern!
+// We don't offer any fix process! Any suggestion can have security concern!
 func Validate(s []byte) error { return nil }
 
 // ValidateDeep use to validate a string array for any error deeply!
-// We don't offer any fix proccess! Any suggestion can have security concern!
+// We don't offer any fix process! Any suggestion can have security concern!
 func ValidateDeep(s []byte) error { return nil }
 
 // EncodeToUTF8 use to encode(convert) this package structure to UTF-8 structure!
@@ -26,8 +26,8 @@ func DecodeFromUTF8(s []byte) ([]byte, error) { return nil, nil }
 // It mostly use for compression and un-compression!
 func DetectScripts(s []byte) []uint32 { return nil }
 
-// DecodeCompressCharecter use to decode first charecter and its size in a valid compress string!
-func DecodeCompressCharecter(s []byte) (ch [4]byte, size int) {
+// DecodeCompressCharacter use to decode first character and its size in a valid compress string!
+func DecodeCompressCharacter(s []byte) (ch [4]byte, size int) {
 	var s0 byte = s[0]
 	var s1 byte = s[1]
 	if s1 < 128 {
