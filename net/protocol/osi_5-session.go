@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 	error_p "memar/error/protocol"
 	user_p "memar/user/protocol"
 )
@@ -19,7 +19,7 @@ https://en.wikipedia.org/wiki/Session_(computer_science)
 
 // The session layer provides the mechanism for opening, closing and managing a session between end-user application processes,
 type OSI_Session interface {
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	Init(dt OSI_Session_DialogueType)
 
 	/* session data */

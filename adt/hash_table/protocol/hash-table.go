@@ -6,9 +6,9 @@ import (
 	array_p "memar/adt/array/protocol"
 	container_p "memar/adt/container/protocol"
 	adt_p "memar/adt/protocol"
-	primitive_p "memar/computer/language/primitive/protocol"
 	hash_p "memar/crypto/hash/protocol"
 	error_p "memar/error/protocol"
+	logic_p "memar/math/logic/protocol"
 )
 
 // func New[K Key, V Value](capacity uint64) *HashTable[K, V]
@@ -37,7 +37,7 @@ type AtomicAccessor[K Key[any], V Value] interface {
 }
 
 type Key[T any] interface {
-	primitive_p.Equivalence[T]
+	logic_p.Equivalence[T]
 	hash_p.Hash64
 }
 

@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 )
 
 /*
@@ -16,7 +16,7 @@ https://en.wikipedia.org/wiki/Data_link_layer
 
 // OSI_DataLink use to network hardware devices in a computers or connect two or more computers.
 type OSI_DataLink interface {
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	Framer
 	NetworkAddress // string form of address (for example, "MAC://aa:bb:cc:dd:ee:ff", "Chapar://[1:242:20]")
 	FrameWriter

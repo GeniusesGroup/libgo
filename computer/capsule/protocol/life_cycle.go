@@ -1,6 +1,6 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package object_p
+package capsule_p
 
 import (
 	error_p "memar/error/protocol"

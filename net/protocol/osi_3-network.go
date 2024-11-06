@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 )
 
 /*
@@ -17,7 +17,7 @@ https://en.wikipedia.org/wiki/Network_layer
 // OSI_Network is the network layer that provides the means of transferring variable-length network packets
 // from a source to a destination host via one or more networks.
 type OSI_Network interface {
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	Framer
 	NetworkAddress // string form of address (for example, "ipv4://192.0.2.1", "ipv6://[2001:db8::1]")
 

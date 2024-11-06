@@ -3,6 +3,7 @@
 package codec_p
 
 import (
+	container_p "memar/adt/container/protocol"
 	datatype_p "memar/datatype/protocol"
 	error_p "memar/error/protocol"
 )

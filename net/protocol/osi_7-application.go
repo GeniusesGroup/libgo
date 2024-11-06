@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 	error_p "memar/error/protocol"
 	operation_p "memar/operation/protocol"
 	service_p "memar/operation/service/protocol"
@@ -22,7 +22,7 @@ type OSI_Application interface {
 	Response() any              // Codec
 	Error() error_p.Error       // just indicate peer error that receive by response of the request.
 
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	OSI_Application_LowLevelAPIs
 }
 

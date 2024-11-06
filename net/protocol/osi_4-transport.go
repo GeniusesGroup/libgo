@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 	error_p "memar/error/protocol"
 	"memar/time/duration"
 )
@@ -19,7 +19,7 @@ https://en.wikipedia.org/wiki/Transport_layer
 // OSI_Transport provides services such as connection-oriented communication, reliability, flow control.
 // It must also implement chunks managing like sRPC, QUIC, TCP, UDP, ...
 type OSI_Transport interface {
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	Framer
 	NetworkAddress // string form of address (for example, "tcp://443", "srpc://1254872653")
 

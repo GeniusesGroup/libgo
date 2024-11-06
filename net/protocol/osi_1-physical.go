@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 	datatype_p "memar/datatype/protocol"
 	error_p "memar/error/protocol"
 )
@@ -32,7 +32,7 @@ type OSI_Physical interface {
 	// Due to speed matters in link layer, and it is very rare situation, it is better to ignore suddenly port unavailability.
 	Send(packet Packet) (err error_p.Error)
 
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	datatype_p.DataType
 	Framer
 	NetworkMTU

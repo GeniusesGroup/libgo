@@ -3,7 +3,7 @@
 package net_p
 
 import (
-	adt_p "memar/adt/protocol"
+	container_p "memar/adt/container/protocol"
 	error_p "memar/error/protocol"
 )
 
@@ -12,7 +12,7 @@ type Frame interface {
 	// StaticFrameLen(args) int
 
 	// FrameLen or FrameLength
-	FrameLength() adt_p.NumberOfElement
+	FrameLength() container_p.NumberOfElement
 	NextFrame() []byte // Frame
 	// Buffer
 
@@ -24,5 +24,5 @@ type Framer interface {
 	FrameType() FrameType
 }
 type FrameWriter interface {
-	WriteFrame(packet Packet) (n adt_p.NumberOfElement, err error_p.Error)
+	WriteFrame(packet Packet) (n container_p.NumberOfElement, err error_p.Error)
 }

@@ -5,8 +5,10 @@ package string_p
 import (
 	array_p "memar/adt/array/protocol"
 	container_p "memar/adt/container/protocol"
-	primitive_p "memar/computer/language/primitive/protocol"
+	// buffer_p "memar/buffer/protocol"
 	error_p "memar/error/protocol"
+	logic_p "memar/math/logic/protocol"
+	memory_p "memar/runtime/memory/protocol"
 )
 
 // In computer programming, a string is traditionally a sequence of characters,
@@ -18,6 +20,7 @@ import (
 // https://en.wikipedia.org/wiki/String_(computer_science)
 type String interface {
 	CharacterEncoding() CharacterEncoding
+	// Buffer() buffer_p.Buffer
 
 	array_p.Dynamic[Character]
 
@@ -27,10 +30,10 @@ type String interface {
 	container_p.Split_Element[String, Character]
 	container_p.Split_Offset[String, Character]
 
-	primitive_p.Equivalence[String]
+	logic_p.Equivalence[String]
 	// If source is a `Split` result, no copy action need and just increase buffer write index.
-	primitive_p.Clone[String]
-	primitive_p.Copy[String]
+	memory_p.Clone[String]
+	memory_p.Copy[String]
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join

@@ -1,6 +1,17 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package primitive_p
+package logic_p
+
+//
+//
+// In logic, a truth function[1] is a function that accepts truth values as input and
+// produces a unique truth value as output. In other words: the input and output of a truth function are all truth values;
+// a truth function will always output exactly one truth value, and
+// inputting the same truth value(s) will always output the same truth value.
+// https://en.wikipedia.org/wiki/Truth_function
+//
+//
+//
 
 // https://en.wikipedia.org/wiki/Logical_conjunction
 // Logical_Connective_AND
@@ -39,11 +50,11 @@ type Equivalence[T any] interface {
 // BiConditional is a relation between two propositions that is true only when both propositions are simultaneously true or false
 // https://en.wikipedia.org/wiki/Logical_biconditional
 // Logical_Connective_Equivalent
-type BiConditional interface {
+type BiConditional[T any] interface {
 	// BiConditional is represented by ↔
 	// This means that that P↔Q  is either analytically (in an axiom system) or synthetically true ,
 	// i.e., that P and Q have the same truth value in the given interpretation.
-	BiConditional()
+	BiConditional(with T) bool
 	// BIC()
 }
 

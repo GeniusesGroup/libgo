@@ -3,12 +3,13 @@
 package string_p
 
 import (
-	primitive_p "memar/computer/language/primitive/protocol"
+	logic_p "memar/math/logic/protocol"
+	memory_p "memar/runtime/memory/protocol"
 )
 
 // Character is base of any character encoding
 type Character interface {
-	primitive_p.Equivalence[Character]
-	primitive_p.Clone[Character]
-	primitive_p.Copy[Character]
+	logic_p.Equivalence[Character]
+	memory_p.Clone[Character]
+	memory_p.Copy[Character]
 }

@@ -1,6 +1,10 @@
 /* For license and copyright information please see the LEGAL file in the code repository */
 
-package primitive_p
+package boolean_p
+
+import (
+	logic_p "memar/math/logic/protocol"
+)
 
 // Boolean algebra is a branch of mathematics that deals with operations on logical values with binary variables.
 // The Boolean variables are represented as binary numbers to represent truths: 1 = true and 0 = false.
@@ -11,8 +15,8 @@ package primitive_p
 // Some other languages:
 // - https://doc.rust-lang.org/stable/std/primitive.bool.html
 type Boolean[B any /*Boolean*/] interface {
-	Conjunction[B, B]
-	Disjunction[B, B]
-	Equivalence[B]
-	Negation[B]
+	logic_p.Conjunction[B, B]
+	logic_p.Disjunction[B, B]
+	logic_p.Equivalence[B]
+	logic_p.Negation[B]
 }

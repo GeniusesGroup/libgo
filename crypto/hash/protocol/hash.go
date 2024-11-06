@@ -5,7 +5,7 @@ package hash_p
 import (
 	container_p "memar/adt/container/protocol"
 	buffer_p "memar/buffer/protocol"
-	object_p "memar/computer/language/object/protocol"
+	capsule_p "memar/computer/capsule/protocol"
 	error_p "memar/error/protocol"
 )
 
@@ -22,7 +22,7 @@ import (
 // Some other languages:
 // - https://doc.rust-lang.org/stable/std/hash/trait.Hasher.html
 type Hash interface {
-	object_p.LifeCycle
+	capsule_p.LifeCycle
 	// Init(source Buffer) Error
 	// Reinit resets the Hash to its initial state.
 	Reinit(source buffer_p.Buffer) error_p.Error
