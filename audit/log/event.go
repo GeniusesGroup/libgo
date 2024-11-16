@@ -3,9 +3,9 @@
 package log
 
 import (
+	log_p "memar/audit/log/protocol"
+	datatype_p "memar/datatype/protocol"
 	"memar/event"
-	log_p "memar/log/protocol"
-	"memar/protocol"
 	string_p "memar/string/protocol"
 	"memar/time/unix"
 )
@@ -19,8 +19,8 @@ type Event struct {
 	stack   string_p.String
 }
 
-//memar:impl memar/protocol.ObjectLifeCycle
-func (e *Event) Init(dt protocol.DataType, level log_p.Level, message, stack string_p.String) {
+//memar:impl memar/computer/language/object/protocol.LifeCycle
+func (e *Event) Init(dt datatype_p.DataType, level log_p.Level, message, stack string_p.String) {
 	e.level = level
 	e.message = message
 	e.stack = stack

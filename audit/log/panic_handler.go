@@ -5,8 +5,8 @@ package log
 import (
 	"fmt"
 
-	log_p "memar/log/protocol"
-	"memar/protocol"
+	log_p "memar/audit/log/protocol"
+	error_p "memar/error/protocol"
 	string_p "memar/string/protocol"
 )
 
@@ -21,16 +21,16 @@ func PanicHandler() {
 			logEvent = message
 		case log_p.Event:
 			var e Event
-			e.Init(message.Domain(), message.LogLevel(), message.LogMessage(), message.RuntimeStack())
+			e.Init(message.DataType(), message.LogLevel(), message.LogMessage(), message.RuntimeStack())
 			logEvent = &e
 		case log_p.Event_Message:
 			var e Event_UTF8
 			e.Init(&DT, log_p.Level_Error, "", true)
 			e.message = message.LogMessage()
 			logEvent = &e.Event
-		case protocol.Error:
+		case error_p.Error:
 			var e Event_UTF8
-			e.Init(message, log_p.Level_Error, message.DataTypeID_string(), true)
+			e.Init(message, log_p.Level_Error, message.DataTypeID_Base64(), true)
 			logEvent = &e.Event
 		case error:
 			var e Event_UTF8
@@ -40,7 +40,7 @@ func PanicHandler() {
 			var e Event_UTF8
 			e.Init(&DT, log_p.Level_Error, message, true)
 			logEvent = &e.Event
-		case string_p.Stringer_To[string_p.String]:
+		case string_p.Stringer_To:
 			var msgStr, _ = message.ToString()
 			var e Event_UTF8
 			e.Init(&DT, log_p.Level_Error, "", true)
