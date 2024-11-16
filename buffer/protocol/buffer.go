@@ -6,7 +6,7 @@ import (
 	container_p "memar/adt/container/protocol"
 	capsule_p "memar/computer/capsule/protocol"
 	datatype_p "memar/datatype/protocol"
-	memory_p "memar/runtime/memory/protocol"
+	memory_p "memar/storage/memory/protocol"
 )
 
 // In computer science, a data buffer (or just buffer) is a region of a memory used to store data temporarily
@@ -19,8 +19,8 @@ type Buffer interface {
 	capsule_p.LifeCycle
 	// Init(opt BufferOptions)
 
-	Buffer_Index
-	Buffer_Sizer
+	Index
+	Sizer
 
 	container_p.Container[byte]
 
@@ -55,7 +55,7 @@ type Buffer interface {
 // ReadAt blocks until either all the data is available or an error occurs.
 // In this respect ReadAt is different from Read.
 
-type Buffer_Index interface {
+type Index interface {
 	ReadIndex() container_p.ElementIndex
 	WriteIndex() container_p.ElementIndex
 
@@ -63,7 +63,7 @@ type Buffer_Index interface {
 	SetWriteIndex(di container_p.ElementIndex)
 }
 
-type Buffer_Sizer interface {
+type Sizer interface {
 	// UnreadLength returns how many bytes are not read(ReadIndex to WriteIndex) in the buffer.
 	UnreadLength() container_p.NumberOfElement
 }

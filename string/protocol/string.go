@@ -8,7 +8,7 @@ import (
 	// buffer_p "memar/buffer/protocol"
 	error_p "memar/error/protocol"
 	logic_p "memar/math/logic/protocol"
-	memory_p "memar/runtime/memory/protocol"
+	memory_p "memar/storage/memory/protocol"
 )
 
 // In computer programming, a string is traditionally a sequence of characters,

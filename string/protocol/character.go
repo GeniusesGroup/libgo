@@ -4,7 +4,7 @@ package string_p
 
 import (
 	logic_p "memar/math/logic/protocol"
-	memory_p "memar/runtime/memory/protocol"
+	memory_p "memar/storage/memory/protocol"
 )
 
 // Character is base of any character encoding
