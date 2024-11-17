@@ -1,5 +1,8 @@
 # Go programming language
 
+## panic, error
+- The convention in the Go libraries is that even when a package uses panic internally, its external API still presents explicit error return values.
+
 ## Some useful commands
 - go build -race
 - go tool compile -S {{file-name}}.go > {{file-name}}_C.S
@@ -17,6 +20,20 @@ Some functionality in files that have build tags `//go:build tag_name` or `// +b
 | Comma-separated elements      | // +build pro,enterprise	                | pro AND enterprise    |
 | New line separated elements   | // +build pro<br />// +build enterprise   | pro AND enterprise    |
 | Exclamation point elements    | // +build !pro	                        | NOT pro               |
+
+## Structure Alignment
+Currently there's no compile-time optimization; the values are padded to 8 bytes on x64.
+
+You can manually arrange `struct`s to optimally utilize space; typically by going from larger types to smaller; 8 consecutive byte fields for example, will only use 8 bytes, but a single byte would be padded to an 8 byte alignment,
+
+### golangci-lint
+you just need to enable ‘maligned’ in the `golangci-lint` settings. Example, from the configuration `file.golangci.example.yml`
+```
+linters-settings:
+  maligned:
+      # print struct with more effective memory layout or not, false by default
+      suggest-new: true
+```
 
 ## Vulnerability Management for Go
 The [govulncheck command](https://go.dev/blog/vuln) is a low-noise, reliable way for Go users to learn about known vulnerabilities that may affect their projects. Govulncheck analyzes your codebase and only surfaces vulnerabilities that actually affect you, based on which functions in your code are transitively calling vulnerable functions. To start using govulncheck, you can run the following from your project:

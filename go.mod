@@ -1,7 +1,7 @@
 module memar
 // module github.com/GeniusesGroup/memar-go
 
-go 1.21
+go 1.23
 
 require (
 	github.com/tdewolff/minify v2.3.6+incompatible
