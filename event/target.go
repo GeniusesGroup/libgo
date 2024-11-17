@@ -5,61 +5,62 @@ package event
 import (
 	"sync"
 
-	"memar/protocol"
+	error_p "memar/error/protocol"
+	event_p "memar/event/protocol"
 )
 
-// TODO::: Can implement anything instead use of sync??
+// TODO::: Change to use atomic operation instead of sync.
 
-// EventTarget dispatch events to listeners on desire protocol.EventMainType types.
-type EventTarget[E protocol.Event] struct {
+// Target dispatch events to listeners on desire event_p.EventMainType types.
+type Target[E event_p.Event] struct {
+	acceptSyncListener bool
+
 	sync sync.Mutex
-	ls   []listener[E]
+	ls   []event_p.EventListener[E]
 }
 
-type listener[E protocol.Event] struct {
-	eventListener protocol.EventListener[E]
-	options       Options
-}
-
-//memar:impl memar/protocol.ObjectLifeCycle
-func (et *EventTarget[E]) Init() (err protocol.Error) {
-	et.ls = make([]listener[E], 0, CNF_InitialListenersLength)
+//memar:impl memar/computer/language/object/protocol.LifeCycle
+func (self *Target[E]) Init(acceptSyncListener bool) (err error_p.Error) {
+	self.acceptSyncListener = acceptSyncListener
+	self.ls = make([]event_p.EventListener[E], 0, CNF_InitialListenersLength)
 	return
 }
 
-//memar:impl memar/protocol.EventTarget
-func (et *EventTarget[E]) DispatchEvent(event E) (err protocol.Error) {
-	et.sync.Lock()
-	var ls = et.ls
+//memar:impl memar/event/protocol.Target
+func (self *Target[E]) DispatchEvent(event E) (err error_p.Error) {
+	self.sync.Lock()
+	var ls = self.ls
 	for i := 0; i < len(ls); i++ {
-		// TODO::: handle options here or caller layer must handle it?
-		ls[i].eventListener.EventHandler(event)
+		ls[i].EventHandler(event)
 	}
-	et.sync.Unlock()
+	self.sync.Unlock()
 	return
 }
-func (et *EventTarget[E]) AddEventListener(callback protocol.EventListener[E], options Options) (err protocol.Error) {
-	et.sync.Lock()
-	var dls = et.ls
-	// TODO::: handle options here or caller layer must handle it?
-	dls = append(dls, listener[E]{callback, options})
-	et.ls = dls
-	et.sync.Unlock()
+func (self *Target[E]) AddEventListener(callback event_p.EventListener[E]) (err error_p.Error) {
+	if callback.Synchronous() == true && self.acceptSyncListener == false {
+		// err =
+		return
+	}
+
+	self.sync.Lock()
+	var dls = self.ls
+	dls = append(dls, callback)
+	self.ls = dls
+	self.sync.Unlock()
 	return
 }
-func (et *EventTarget[E]) RemoveEventListener(callback protocol.EventListener[E], options Options) (err protocol.Error) {
-	et.sync.Lock()
-	var dls = et.ls
+func (self *Target[E]) RemoveEventListener(callback event_p.EventListener[E]) (err error_p.Error) {
+	self.sync.Lock()
+	var dls = self.ls
 	var ln = len(dls)
 	for i := 0; i < ln; i++ {
-		// TODO::: handle options here or caller layer must handle it?
-		if dls[i].eventListener == callback {
+		if dls[i] == callback {
 			copy(dls[i:], dls[i+1:])
 			dls = dls[:ln-1]
-			et.ls = dls
+			self.ls = dls
 			break
 		}
 	}
-	et.sync.Unlock()
+	self.sync.Unlock()
 	return
 }

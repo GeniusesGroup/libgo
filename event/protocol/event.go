@@ -13,17 +13,20 @@ import (
 // https://developer.mozilla.org/en-US/docs/Web/API/Event
 // https://developer.mozilla.org/en-US/docs/Web/Events
 type Event interface {
-	Domain() datatype_p.DataType
-	Time() time_p.Time
+	datatype_p.Field_DataType
+	time_p.Field_Time
 
+	Event_State
+	Event_Methods
+}
+
+type Event_State interface {
 	// Returns true or false depending on how event was initialized. Its return value does not always carry meaning,
 	// but true can indicate that part of the operation during which event was dispatched, can be canceled by invoking the preventDefault() method.
 	// It also means subscribers receive events in asynchronous or synchronous manner. true means synchronous manner.
 	Cancelable() bool
 	// Returns true if preventDefault() was invoked successfully to indicate cancellation, and false otherwise.
 	DefaultPrevented() bool
-
-	Event_Methods
 }
 
 type Event_Methods interface {

@@ -3,28 +3,32 @@
 package event
 
 import (
-	"memar/protocol"
+	datatype_p "memar/datatype/protocol"
+	error_p "memar/error/protocol"
+	time_p "memar/time/protocol"
 	"memar/time/unix"
 )
 
-// Event implement protocol.LogEvent
+// Event implement memar/event/protocol.Event
+//
+//memar:impl memar/event/protocol.Event
 type Event struct {
-	domain protocol.DataType
-	time   unix.Time
+	dt   datatype_p.DataType
+	time unix.Time
 }
 
-//memar:impl memar/protocol.ObjectLifeCycle
-func (e *Event) Init(domain protocol.DataType, time unix.Time) {
-	e.domain = domain
-	e.time = time
+//memar:impl memar/computer/language/object/protocol.LifeCycle
+func (self *Event) Init(dt datatype_p.DataType, time unix.Time) {
+	self.dt = dt
+	self.time = time
 }
 
-//memar:impl memar/protocol.Event
-func (e *Event) Domain() protocol.DataType { return e.domain }
-func (e *Event) Time() protocol.Time       { return &e.time }
-func (e *Event) Cancelable() bool          { return false }
-func (e *Event) DefaultPrevented() bool    { return false }
-func (e *Event) Bubbles() bool             { return false }
+//memar:impl memar/event/protocol.Event
+func (self *Event) DataType() datatype_p.DataType { return self.dt }
+func (self *Event) Time() time_p.Time             { return &self.time }
+func (self *Event) Cancelable() bool              { return false }
+func (self *Event) DefaultPrevented() bool        { return false }
+func (self *Event) Bubbles() bool                 { return false }
 
-//memar:impl memar/protocol.Event_Methods
-func (e *Event) PreventDefault() {}
+//memar:impl memar/event/protocol.Event_Methods
+func (self *Event) PreventDefault() (err error_p.Error) { return nil }
