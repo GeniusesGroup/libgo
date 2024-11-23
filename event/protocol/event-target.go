@@ -7,16 +7,24 @@ import (
 )
 
 // Target is a interface implemented to receive events and may have listeners for them.
-// It MUST implement in each domain that need to dispatch, It means method only accept that domain event not other one.
+//
+// It MUST implement for each data-type in each domain that need to dispatch,
+// It means method only accept that data-type event not any other one.
+//
+// Other frameworks:
 // https://developer.mozilla.org/en-US/docs/Web/API/Target
 type Target[E Event] interface {
 	// Appends an event listener for events whose type attribute value is type.
 	// The callback argument sets the callback that will be invoked when the event is dispatched.
 	// The event listener is appended to target's event listener list and is not appended if it has the same type, callback, and capture.
+	//
+	// Other frameworks:
 	// https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 	AddEventListener(callback EventListener[E]) (err error_p.Error)
 
 	// Removes the event listener in target's event listener list with the same type, callback, and options.
+	//
+	// Other frameworks:
 	// https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
 	RemoveEventListener(callback EventListener[E]) (err error_p.Error)
 
@@ -24,18 +32,14 @@ type Target[E Event] interface {
 	// All applicable event handlers are called and return before DispatchEvent() returns.
 	// The terms "notify clients", "send notifications", "trigger notifications", and "fire notifications" are used interchangeably with DispatchEvent.
 	// Unlike web APIs, developers can check event.DefaultPrevented() after return, we don't return any data.
+	//
+	// Other frameworks:
 	// https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
 	//
 	// Raise(event E) (err error_p.Error)
 	DispatchEvent(event E) (err error_p.Error)
 
 	// EventListeners() []EventListener[E] // Due to security problem, can't expose listeners to others
-
-	// Target_State
-}
-
-type Target_State interface {
-	AcceptSyncListener() bool
 }
 
 // EventListener Usually implement on some kind of services that:
@@ -45,19 +49,18 @@ type Target_State interface {
 type EventListener[E Event] interface {
 	// It CAN be Blocking(Synchronous) & Non-Blocking, means It CAN block the caller in any ways.
 	// **Strongly suggest just use blocking if you force by strong logic requirements like authorization**
-	// if Cancelable() is `false`, Callee MUST NOT block caller. Linter MUST check this condition.
 	EventHandler(event E)
+
+	//
+	// EventListener can implement some functionality like:::
+	//
 
 	// It will part of process and can change the flow of the desire event.
 	// Some consideration:
 	// 	- Target can prevent in `AddEventListener` to register sync listener.
 	// 	- May be `Event` dispatcher don't implement `Event.DefaultPrevented()` and not let you to change the flow.
 	// 	- Just if `Event.Cancelable()`` is `true`, listener can change the flow.
-	Synchronous() bool
-
-	//
-	// EventListener can implement some functionality like:::
-	//
+	// Synchronous() bool
 
 	// - AddEventListener: Capture indicating that events of this type will be dispatched to the registered listener
 	// before being dispatched to any Target beneath it in the target tree.

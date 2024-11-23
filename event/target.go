@@ -13,15 +13,12 @@ import (
 
 // Target dispatch events to listeners on desire event_p.EventMainType types.
 type Target[E event_p.Event] struct {
-	acceptSyncListener bool
-
 	sync sync.Mutex
 	ls   []event_p.EventListener[E]
 }
 
-//memar:impl memar/computer/language/object/protocol.LifeCycle
-func (self *Target[E]) Init(acceptSyncListener bool) (err error_p.Error) {
-	self.acceptSyncListener = acceptSyncListener
+//memar:impl memar/computer/capsule/protocol.LifeCycle
+func (self *Target[E]) Init() (err error_p.Error) {
 	self.ls = make([]event_p.EventListener[E], 0, CNF_InitialListenersLength)
 	return
 }
@@ -37,11 +34,6 @@ func (self *Target[E]) DispatchEvent(event E) (err error_p.Error) {
 	return
 }
 func (self *Target[E]) AddEventListener(callback event_p.EventListener[E]) (err error_p.Error) {
-	if callback.Synchronous() == true && self.acceptSyncListener == false {
-		// err =
-		return
-	}
-
 	self.sync.Lock()
 	var dls = self.ls
 	dls = append(dls, callback)

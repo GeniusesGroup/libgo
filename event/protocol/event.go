@@ -4,33 +4,25 @@ package event_p
 
 import (
 	datatype_p "memar/datatype/protocol"
-	error_p "memar/error/protocol"
+	logic_p "memar/math/logic/protocol"
 	time_p "memar/time/protocol"
 )
 
-// Event usually can be any other domain records that store in storage layer.
+// Events CAN be any data-type in any domain.
+// Event are runtime data-types that DON't need to store in storage layer.
+// 
+// Events dispatch after base logic that make this Event.
+// e.g. When a service request want to serve, a handler receive the request and decide to save the request for auditing
+// after validate request codec and save request, a related event dispatch.
+// This service can provide some mechanism to change the flow of request processing
+//
+// Other frameworks:
 // https://www.w3.org/TR/DOM-Level-3-Events/#event-flow
 // https://developer.mozilla.org/en-US/docs/Web/API/Event
 // https://developer.mozilla.org/en-US/docs/Web/Events
+// https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.eventdescriptor
 type Event interface {
 	datatype_p.Field_DataType
 	time_p.Field_Time
-
-	Event_State
-	Event_Methods
-}
-
-type Event_State interface {
-	// Returns true or false depending on how event was initialized. Its return value does not always carry meaning,
-	// but true can indicate that part of the operation during which event was dispatched, can be canceled by invoking the preventDefault() method.
-	// It also means subscribers receive events in asynchronous or synchronous manner. true means synchronous manner.
-	Cancelable() bool
-	// Returns true if preventDefault() was invoked successfully to indicate cancellation, and false otherwise.
-	DefaultPrevented() bool
-}
-
-type Event_Methods interface {
-	// If invoked when the cancelable attribute value is true, and while executing a listener for the event with passive set to false,
-	// signals to the operation that caused event to be dispatched that it needs to be canceled.
-	PreventDefault() (err error_p.Error)
+	logic_p.Equivalence[Event]
 }

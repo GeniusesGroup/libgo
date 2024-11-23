@@ -4,7 +4,7 @@ package event
 
 import (
 	datatype_p "memar/datatype/protocol"
-	error_p "memar/error/protocol"
+	event_p "memar/event/protocol"
 	time_p "memar/time/protocol"
 	"memar/time/unix"
 )
@@ -17,18 +17,17 @@ type Event struct {
 	time unix.Time
 }
 
-//memar:impl memar/computer/language/object/protocol.LifeCycle
+//memar:impl memar/computer/capsule/protocol.LifeCycle
 func (self *Event) Init(dt datatype_p.DataType, time unix.Time) {
 	self.dt = dt
 	self.time = time
 }
 
-//memar:impl memar/event/protocol.Event
+//memar:impl memar/datatype/protocol.Field_DataType
 func (self *Event) DataType() datatype_p.DataType { return self.dt }
-func (self *Event) Time() time_p.Time             { return &self.time }
-func (self *Event) Cancelable() bool              { return false }
-func (self *Event) DefaultPrevented() bool        { return false }
-func (self *Event) Bubbles() bool                 { return false }
 
-//memar:impl memar/event/protocol.Event_Methods
-func (self *Event) PreventDefault() (err error_p.Error) { return nil }
+//memar:impl memar/time/protocol.Field_Time
+func (self *Event) Time() time_p.Time { return &self.time }
+
+//memar:impl memar/math/logic/protocol.Equivalence
+func (self *Event) Equivalence(with event_p.Event) bool { return self.DataType() == with.DataType() }
